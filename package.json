@@ -67,6 +67,7 @@
 		"onWebviewPanel:gitlens.welcome",
 		"onWebviewPanel:gitlens.settings",
 		"onWebviewPanel:gitlens.graph",
+		"onWebviewPanel:gitlens.workspaces",
 		"onCommand:gitlens.plus.learn",
 		"onCommand:gitlens.plus.loginOrSignUp",
 		"onCommand:gitlens.plus.logout",
@@ -75,6 +76,7 @@
 		"onCommand:gitlens.plus.purchase",
 		"onCommand:gitlens.getStarted",
 		"onCommand:gitlens.showGraphPage",
+		"onCommand:gitlens.showWorkspacesPage",
 		"onCommand:gitlens.showSettingsPage",
 		"onCommand:gitlens.showSettingsPage#views",
 		"onCommand:gitlens.showSettingsPage#autolinks",
@@ -4238,6 +4240,12 @@
 				"icon": "$(gitlens-graph)"
 			},
 			{
+				"command": "gitlens.showWorkspacesPage",
+				"title": "Show Workspaces",
+				"category": "GitLens+",
+				"icon": "$(layers)"
+			},
+			{
 				"command": "gitlens.showSettingsPage",
 				"title": "Open Settings",
 				"category": "GitLens",
@@ -6561,6 +6569,12 @@
 				"icon": "$(refresh)"
 			},
 			{
+				"command": "gitlens.workspaces.refresh",
+				"title": "Refresh",
+				"category": "GitLens",
+				"icon": "$(refresh)"
+			},
+			{
 				"command": "gitlens.graph.copyRemoteBranchUrl",
 				"title": "Copy Remote Branch URL",
 				"category": "GitLens",
@@ -7103,6 +7117,10 @@
 				{
 					"command": "gitlens.showInCommitGraph",
 					"when": "false"
+				},
+				{
+					"command": "gitlens.showWorkspacesPage",
+					"when": "gitlens:enabled"
 				},
 				{
 					"command": "gitlens.showSettingsPage#views",
@@ -8681,6 +8699,10 @@
 					"when": "false"
 				},
 				{
+					"command": "gitlens.workspaces.refresh",
+					"when": "false"
+				},
+				{
 					"command": "gitlens.graph.copyRemoteBranchUrl",
 					"when": "false"
 				},
@@ -9100,6 +9122,11 @@
 				{
 					"command": "gitlens.showSettingsPage#commit-graph",
 					"when": "gitlens:webview:graph:active",
+					"group": "navigation@-98"
+				},
+				{
+					"command": "gitlens.workspaces.refresh",
+					"when": "gitlens:workspaces:focused",
 					"group": "navigation@-98"
 				}
 			],
