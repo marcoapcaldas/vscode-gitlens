@@ -173,6 +173,7 @@ const defaultGraphColumnsSettings: GraphColumnsSettings = {
 	author: { width: 130, isHidden: false },
 	datetime: { width: 130, isHidden: false },
 	sha: { width: 130, isHidden: false },
+	activity: { width: 130, isHidden: false },
 };
 
 export class GraphWebview extends WebviewBase<State> {
@@ -411,6 +412,8 @@ export class GraphWebview extends WebviewBase<State> {
 			registerCommand('gitlens.graph.columnDateTimeOff', () => this.toggleColumn('datetime', false)),
 			registerCommand('gitlens.graph.columnShaOn', () => this.toggleColumn('sha', true)),
 			registerCommand('gitlens.graph.columnShaOff', () => this.toggleColumn('sha', false)),
+			registerCommand('gitlens.graph.columnActivityOn', () => this.toggleColumn('activity', true)),
+			registerCommand('gitlens.graph.columnActivityOff', () => this.toggleColumn('activity', false)),
 
 			registerCommand('gitlens.graph.copyDeepLinkToBranch', this.copyDeepLinkToBranch, this),
 			registerCommand('gitlens.graph.copyDeepLinkToCommit', this.copyDeepLinkToCommit, this),
@@ -1719,11 +1722,14 @@ export class GraphWebview extends WebviewBase<State> {
 		const ref =
 			this._selectedId == null || this._selectedId === GitRevision.uncommitted ? 'HEAD' : this._selectedId;
 
+		const columns = this.getColumns();
+		const columnSettings = this.getColumnSettings(columns);
+
 		const dataPromise = this.container.git.getCommitsForGraph(
 			this.repository.path,
 			this._panel!.webview.asWebviewUri.bind(this._panel!.webview),
 			{
-				include: { stats: configuration.get('graph.experimental.minimap.enabled') },
+				include: { stats: configuration.get('graph.experimental.minimap.enabled') || !columnSettings.activity.isHidden },
 				limit: limit,
 				ref: ref,
 			},
@@ -1752,8 +1758,6 @@ export class GraphWebview extends WebviewBase<State> {
 			this.setSelectedRows(data.id);
 		}
 
-		const columns = this.getColumns();
-
 		const lastFetched = await this.repository.getLastFetched();
 		const branch = await this.repository.getBranch();
 
@@ -1779,7 +1783,7 @@ export class GraphWebview extends WebviewBase<State> {
 							hasMore: data.paging?.hasMore ?? false,
 					  }
 					: undefined,
-			columns: this.getColumnSettings(columns),
+			columns: columnSettings,
 			config: this.getComponentConfig(),
 			context: {
 				header: this.getColumnHeaderContext(columns),

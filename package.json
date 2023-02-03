@@ -6903,6 +6903,16 @@
 				"command": "gitlens.graph.columnShaOff",
 				"title": "Hide SHA",
 				"category": "GitLens"
+			},
+			{
+				"command": "gitlens.graph.columnActivityOn",
+				"title": "Show Activity",
+				"category": "GitLens"
+			},
+			{
+				"command": "gitlens.graph.columnActivityOff",
+				"title": "Hide Activity",
+				"category": "GitLens"
 			}
 		],
 		"icons": {
@@ -8952,6 +8962,14 @@
 				},
 				{
 					"command": "gitlens.graph.columnShaOff",
+					"when": "false"
+				},
+				{
+					"command": "gitlens.graph.columnActivityOn",
+					"when": "false"
+				},
+				{
+					"command": "gitlens.graph.columnActivityOff",
 					"when": "false"
 				},
 				{
@@ -11671,6 +11689,16 @@
 					"command": "gitlens.graph.columnShaOff",
 					"when": "webviewItem =~ /gitlens:graph:columns\\b/ && webviewItemValue =~ /^(?:(?!\\bsha\\b).)*$/",
 					"group": "1_columns@3"
+				},
+				{
+					"command": "gitlens.graph.columnActivityOn",
+					"when": "webviewItem =~ /gitlens:graph:columns\\b/ && webviewItemValue =~ /\\bactivity\\b/",
+					"group": "1_columns@4"
+				},
+				{
+					"command": "gitlens.graph.columnActivityOff",
+					"when": "webviewItem =~ /gitlens:graph:columns\\b/ && webviewItemValue =~ /^(?:(?!\\bactivity\\b).)*$/",
+					"group": "1_columns@4"
 				}
 			],
 			"gitlens/commit/browse": [
