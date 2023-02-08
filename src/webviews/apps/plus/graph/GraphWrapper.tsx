@@ -233,6 +233,12 @@ export function GraphWrapper({
 	const ensuredIds = useRef<Set<string>>(new Set());
 	const ensuredSkippedIds = useRef<Set<string>>(new Set());
 
+	// TODO@ramint Remove/update this logic once markers are individually configurable
+	const disabledScrollMarkers = [GraphScrollMarkerTypes.Tag];
+	const enabledScrollMarkers = Object.values(GraphScrollMarkerTypes).filter(
+		marker => !disabledScrollMarkers.includes(marker),
+	);
+
 	function updateState(
 		state: State,
 		type?: IpcNotificationType<any> | InternalNotificationType,
@@ -1262,7 +1268,7 @@ export function GraphWrapper({
 							dimMergeCommits={graphConfig?.dimMergeCommits}
 							enabledRefMetadataTypes={graphConfig?.enabledRefMetadataTypes}
 							enabledScrollMarkerTypes={
-								graphConfig?.showScrollMarkers ? Object.values(GraphScrollMarkerTypes) : []
+								graphConfig?.showScrollMarkers ? enabledScrollMarkers : []
 							}
 							enableMultiSelection={graphConfig?.enableMultiSelection}
 							excludeRefsById={excludeRefsById}
